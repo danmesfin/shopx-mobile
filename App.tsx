@@ -10,7 +10,6 @@ import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
   ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   useColorScheme,
@@ -19,6 +18,8 @@ import {
 } from 'react-native';
 
 import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
+import Statusbar from './src/components/Statusbar';
+import {ExampleComponent} from './src/components/Example';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -64,24 +65,18 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
         <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
+        <View style={styles.center}>
+          <Statusbar />
+          <ExampleComponent title="hello" />
           <Section title="">
             <Button title="Click Me !" onPress={() => handleCounter(count)} />
           </Section>
-          <Section title="">
-            <Text style={styles.fullWidth}>You Clicked me {count} times !</Text>
-          </Section>
+
+          <Text style={styles.fullWidth}>You Clicked me {count} times !</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
