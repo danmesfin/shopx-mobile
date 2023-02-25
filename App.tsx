@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -15,6 +15,7 @@ import {
   Text,
   useColorScheme,
   View,
+  Button,
 } from 'react-native';
 
 import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
@@ -51,7 +52,12 @@ function Section({children, title}: SectionProps): JSX.Element {
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const [count, setCount] = useState(0);
 
+  function handleCounter(e: any | Number) {
+    // count = count + 1;
+    setCount(e + 1);
+  }
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
@@ -70,9 +76,11 @@ function App(): JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Section title="Greetings !">
-            <Text style={{flex: 1}}>Hello Dan !</Text>
-            <Text style={{flex: 2}}>Hello Dan !</Text>
+          <Section title="">
+            <Button title="Click Me !" onPress={() => handleCounter(count)} />
+          </Section>
+          <Section title="">
+            <Text style={styles.fullWidth}>You Clicked me {count} times !</Text>
           </Section>
         </View>
       </ScrollView>
@@ -81,6 +89,9 @@ function App(): JSX.Element {
 }
 
 const styles = StyleSheet.create({
+  fullWidth: {
+    flex: 1,
+  },
   center: {
     alignItems: 'center',
   },
