@@ -1,110 +1,44 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+/* eslint-disable react/no-unstable-nested-components */
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-import React, {useState} from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-  Button,
-} from 'react-native';
+import HomeScreen from './src/Screen/HomeScreen';
+import CartScreen from './src/Screen/CartScreen';
+import ProfileScreen from './src/Screen/ProfileScreen';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Statusbar from './src/components/Statusbar';
-import HomeScreen from './src/Screen';
+const Tab = createBottomTabNavigator();
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const Navigation = () => {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({color, size}) => {
+            let iconName;
+
+            if (route.name === 'Home') {
+              iconName = 'home';
+            } else if (route.name === 'Cart') {
+              iconName = 'shopping-cart';
+            } else if (route.name === 'Profile') {
+              iconName = 'user';
+            }
+
+            return <Icon name={iconName} size={size} color={color} />;
           },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+        })}
+        tabBarOptions={{
+          activeTintColor: '#e76f51',
+          inactiveTintColor: '#264653',
+        }}>
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Cart" component={CartScreen} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  const [count, setCount] = useState(0);
-
-  function handleCounter(e: any | Number) {
-    // count = count + 1;
-    setCount(e + 1);
-  }
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View style={styles.center}>
-          <Statusbar />
-          <Section title="">
-            <Button title="Click Me !" onPress={() => handleCounter(count)} />
-          </Section>
-
-          <Text style={styles.fullWidth}>You Clicked me {count} times !</Text>
-        </View>
-        <HomeScreen />
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  fullWidth: {
-    flex: 1,
-  },
-  center: {
-    alignItems: 'center',
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+export default Navigation;

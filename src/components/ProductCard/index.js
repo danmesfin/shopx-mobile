@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 
-const ProductCard = ({product, onAddToCart}) => {
+const ProductCard = ({product, onAddToCart, onPress}) => {
   return (
-    <TouchableOpacity style={styles.container} onPress={onAddToCart}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.imageContainer}>
         <Image source={{uri: product.image}} style={styles.image} />
       </View>
