@@ -17,9 +17,9 @@ import {
   Button,
 } from 'react-native';
 
-import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Statusbar from './src/components/Statusbar';
-import {ExampleComponent} from './src/components/Example';
+import HomeScreen from './src/Screen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -68,16 +68,15 @@ function App(): JSX.Element {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
         <View style={styles.center}>
           <Statusbar />
-          <ExampleComponent title="hello" />
           <Section title="">
             <Button title="Click Me !" onPress={() => handleCounter(count)} />
           </Section>
 
           <Text style={styles.fullWidth}>You Clicked me {count} times !</Text>
         </View>
+        <HomeScreen />
       </ScrollView>
     </SafeAreaView>
   );
