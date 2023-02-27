@@ -8,6 +8,8 @@ import {
   ScrollView,
 } from 'react-native';
 import axios from 'axios';
+import {useNavigation} from '@react-navigation/native';
+
 import ProductCard from '../../components/ProductCard';
 import Categories from '../../components/CategoriesNavigator';
 
@@ -15,6 +17,11 @@ const HomeScreen = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const navigation = useNavigation();
+
+  const handlePress = id => {
+    navigation.navigate('ProductDetail', {productId: id});
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,7 +35,9 @@ const HomeScreen = () => {
     fetchData();
   }, []);
 
-  const renderProductCard = ({item}) => <ProductCard product={item} />;
+  const renderProductCard = ({item}) => (
+    <ProductCard product={item} onPress={() => handlePress(item.id)} />
+  );
 
   return (
     <ScrollView style={styles.container}>
