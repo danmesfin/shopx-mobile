@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import HomeScreen from './src/Screen/HomeScreen';
 import CartScreen from './src/Screen/CartScreen';
 import ProfileScreen from './src/Screen/ProfileScreen';
+import ProductDetailScreen from './src/Screen/ProductDetailScreen';
 
 const Tab = createBottomTabNavigator();
 

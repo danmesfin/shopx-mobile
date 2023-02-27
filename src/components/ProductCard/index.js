@@ -1,9 +1,16 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const ProductCard = ({product, onAddToCart, onPress}) => {
+  const navigation = useNavigation();
+
+  const handlePress = () => {
+    navigation.navigate('ProductDetail', {productId: product.id});
+  };
+
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.container} onPress={() => handlePress}>
       <View style={styles.imageContainer}>
         <Image source={{uri: product.image}} style={styles.image} />
       </View>
@@ -43,10 +50,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
+    backgroundColor: '#f9f9f9',
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: '90%',
+    height: '90%',
     resizeMode: 'contain',
   },
   textContainer: {
@@ -58,7 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
     fontFamily: 'Arial',
-    color: '#264653',
+    color: '#333',
   },
   price: {
     fontSize: 16,
@@ -67,7 +75,7 @@ const styles = StyleSheet.create({
     color: '#e76f51',
   },
   addToCartContainer: {
-    backgroundColor: '#f4a261',
+    backgroundColor: '#e76f51',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     alignItems: 'center',

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import axios from 'axios';
 import ProductCard from '../../components/ProductCard';
@@ -30,38 +31,39 @@ const HomeScreen = () => {
   const renderProductCard = ({item}) => <ProductCard product={item} />;
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Categories />
-      </View>
+    <ScrollView style={styles.container}>
+      <Categories />
+
       <View style={styles.header}>
         <Text style={styles.title}>New Arrivals</Text>
         {loading && <ActivityIndicator size="small" color="#fff" />}
       </View>
-      <View style={styles.body}>
-        <FlatList
-          data={products}
-          keyExtractor={item => item.id.toString()}
-          renderItem={renderProductCard}
-          numColumns={2}
-          contentContainerStyle={styles.productList}
-        />
-      </View>
-    </View>
+
+      <FlatList
+        data={products}
+        keyExtractor={item => item.id.toString()}
+        renderItem={renderProductCard}
+        numColumns={2}
+        contentContainerStyle={styles.productList}
+      />
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F6F6F6',
   },
   header: {
-    backgroundColor: '#e76f51',
+    backgroundColor: '#FF7F50',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
   },
   title: {
     color: '#fff',
@@ -69,12 +71,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginRight: 10,
   },
-  body: {
-    flex: 1,
-    padding: 10,
-  },
   productList: {
     justifyContent: 'space-between',
+    padding: 20,
   },
 });
 
