@@ -1,18 +1,24 @@
 /* eslint-disable react/no-unstable-nested-components */
-import React from 'react';
+import React, {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+import SignInScreen from './src/Screen/Auth/SignInScreen';
+import SignupScreen from './src/Screen/Auth/SignUpScreen';
 
 //import HomeScreen from './src/Screen/HomeScreen';
 import CartScreen from './src/Screen/CartScreen';
 import ProfileScreen from './src/Screen/ProfileScreen';
 import HomeStackNavigator from './src/Navigators/HomeStackNavigator';
+import {createStackNavigator} from '@react-navigation/stack';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const Navigation = () => {
-  return (
+  const [isLogedin, setIsLogedIn] = useState(false);
+  return isLogedin ? (
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({route}) => ({
@@ -42,6 +48,13 @@ const Navigation = () => {
         <Tab.Screen name="Cart" component={CartScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
+    </NavigationContainer>
+  ) : (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="SignIn" component={SignInScreen} />
+        <Stack.Screen name="SignUp" component={SignupScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
