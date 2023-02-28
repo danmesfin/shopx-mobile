@@ -44,7 +44,7 @@ const SignupScreen = ({navigation}) => {
       </TouchableOpacity>
       <View style={styles.signIn}>
         <Text>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
+        <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
           <Text style={styles.signInLink}>Sign in</Text>
         </TouchableOpacity>
       </View>
@@ -75,13 +75,15 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   button: {
-    backgroundColor: '#4CAF50',
+    width: '100%',
+    backgroundColor: '#e76f51',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 5,
     marginTop: 20,
   },
   buttonText: {
+    textAlign: 'center',
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   signInLink: {
-    color: '#4CAF50',
+    color: '#e76f51',
   },
 });
 

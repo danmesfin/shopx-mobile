@@ -1,14 +1,22 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
+import {useDispatch, useSelector} from 'react-redux';
+import {signInUser} from '../../../reducers/authSlice';
 
 const SignInScreen = ({navigation}) => {
+  const dispatch = useDispatch();
+  const {isLoading, error} = useSelector(state => state.auth);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignIn = () => {
-    // Add logic to sign in with email and password
-    console.log(`Signed in with email: ${email} and password: ${password}`);
+  const handleSignIn = async () => {
+    try {
+      await dispatch(signInUser({username: email, password}));
+      // navigation.navigate('Home');
+    } catch (err) {
+      console.log('Sign in failed:', err.message);
+    }
   };
 
   return (
@@ -26,12 +34,21 @@ const SignInScreen = ({navigation}) => {
         onChangeText={text => setPassword(text)}
         style={styles.input}
       />
-      <Button mode="contained" onPress={handleSignIn} style={styles.button}>
+      <Button
+        mode="contained"
+        onPress={handleSignIn}
+        style={styles.button}
+        loading={isLoading}
+        disabled={isLoading}>
         Sign In
       </Button>
-      <Button onPress={() => navigation.navigate('SignUp')} style={styles.link}>
-        Don't have an account? Sign Up
-      </Button>
+      {error && <Text style={styles.error}>{error}</Text>}
+      <View style={styles.signUp}>
+        <Text>Don't have an account? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+          <Text style={styles.signUpLink}>Sign up</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -51,9 +68,18 @@ const styles = StyleSheet.create({
   button: {
     width: '100%',
     marginTop: 20,
+    backgroundColor: '#e76f51',
   },
-  link: {
+  error: {
+    color: 'red',
     marginTop: 10,
+  },
+  signUp: {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+  signUpLink: {
+    color: '#e76f51',
   },
 });
 
