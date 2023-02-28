@@ -13,7 +13,6 @@ const SignInScreen = ({navigation}) => {
   const handleSignIn = async () => {
     try {
       await dispatch(signInUser({username: email, password}));
-      // navigation.navigate('Home');
     } catch (err) {
       console.log('Sign in failed:', err.message);
     }

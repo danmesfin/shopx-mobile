@@ -1,42 +1,24 @@
-/* eslint-disable react/no-unstable-nested-components */
-import React, {useState} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-// import {Provider} from 'react-redux';
-// import store from './src/store/store';
-
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import SignInScreen from './Screen/Auth/SignInScreen';
 import SignupScreen from './Screen/Auth/SignUpScreen';
-
-//import HomeScreen from './src/Screen/HomeScreen';
 import CartScreen from './Screen/CartScreen';
 import ProfileScreen from './Screen/ProfileScreen';
 import HomeStackNavigator from './Navigators/HomeStackNavigator';
-import {createStackNavigator} from '@react-navigation/stack';
-//import CounterScreen from './Screen/CounterScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
 const App = () => {
   const {user} = useSelector(state => state.auth);
-  console.log(user);
-  //const UserContext = createContext();
-  //const [user, setUser] = useState(null);
-  const [isLogedin, setIsLogedIn] = useState(false);
-
-  // if (user) {
-  //   console.log('set user');
-  //   setIsLogedIn(true);
-  // }
 
   return (
     <NavigationContainer>
-      {!user == null ? (
+      {user ? (
         <Tab.Navigator
           screenOptions={({route}) => ({
             tabBarIcon: ({color, size}) => {
@@ -67,7 +49,6 @@ const App = () => {
         </Tab.Navigator>
       ) : (
         <Stack.Navigator>
-          {/* {<Stack.Screen name="counter" component={CounterScreen} />} */}
           <Stack.Screen
             name="SignIn"
             options={{headerShown: false}}
@@ -78,11 +59,6 @@ const App = () => {
             options={{headerShown: false}}
             component={SignupScreen}
           />
-          {/* <Tab.Screen
-            name="Home"
-            component={HomeStackNavigator}
-            options={{headerShown: false}}
-          /> */}
         </Stack.Navigator>
       )}
     </NavigationContainer>
