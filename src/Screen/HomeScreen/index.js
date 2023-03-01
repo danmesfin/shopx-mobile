@@ -55,7 +55,7 @@ const HomeScreen = () => {
         data={products}
         keyExtractor={item => item.id.toString()}
         renderItem={renderProductCard}
-        numColumns={2}
+        numColumns={1}
         contentContainerStyle={styles.productList}
       />
     </ScrollView>

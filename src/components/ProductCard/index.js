@@ -1,85 +1,102 @@
-import React from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  ImageBackground,
+  Image,
+} from 'react-native';
+import Rating from './Rating';
 
-const ProductCard = ({product, onAddToCart, onPress}) => {
+const ProductCard = ({product, onPress}) => {
+  const [isFavorited, setIsFavorited] = useState(false);
+  const handleFavoritePress = () => {
+    setIsFavorited(!isFavorited);
+  };
+
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
-      <View style={styles.imageContainer}>
-        <Image source={{uri: product.image}} style={styles.image} />
-      </View>
-      <View style={styles.textContainer}>
-        <Text numberOfLines={2} ellipsizeMode="tail" style={styles.title}>
-          {product.title}
-        </Text>
-        <Text style={styles.price}>${product.price.toFixed(2)}</Text>
-      </View>
-      <View style={styles.addToCartContainer}>
-        <TouchableOpacity onPress={onAddToCart}>
-          <Text style={styles.addToCartText}>Add to Cart</Text>
-        </TouchableOpacity>
+    <TouchableOpacity style={styles.cardContainer} onPress={onPress}>
+      <ImageBackground
+        source={{uri: product.image}}
+        style={styles.imageBackground}
+        resizeMode="cover">
+        <View style={styles.favoriteContainer}>
+          <TouchableOpacity onPress={handleFavoritePress}>
+            <Image
+              source={
+                isFavorited
+                  ? require('../../../assets/icons/favorite-filled.png')
+                  : require('../../../assets/icons/favorite-outline.png')
+              }
+              style={styles.favoriteIcon}
+            />
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+      <View style={styles.detailsContainer}>
+        <Text style={styles.title}>{product.title}</Text>
+        <View style={styles.priceRatingContainer}>
+          <Text style={styles.price}>${product.price.toFixed(2)}</Text>
+          <Rating rating={product.rating.rate} count={product.rating.count} />
+        </View>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.description}>{product.description}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#fff',
+  cardContainer: {
+    backgroundColor: '#FFF',
     borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    width: '48%',
-    margin: '1%',
+    overflow: 'hidden',
+    marginBottom: 20,
+    elevation: 3,
   },
-  imageContainer: {
-    height: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-    backgroundColor: '#f9f9f9',
-  },
-  image: {
-    width: '90%',
-    height: '90%',
-    resizeMode: 'contain',
-  },
-  textContainer: {
+  imageBackground: {
+    height: 250,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
     padding: 10,
-    height: 80,
+  },
+  favoriteContainer: {
+    backgroundColor: '#FFF',
+    borderRadius: 20,
+    padding: 10,
+    elevation: 5,
+  },
+  favoriteIcon: {
+    width: 30,
+    height: 30,
+  },
+  detailsContainer: {
+    padding: 10,
   },
   title: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 5,
-    fontFamily: 'Arial',
-    color: '#333',
+    marginBottom: 10,
+  },
+  priceRatingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   price: {
     fontSize: 16,
     fontWeight: 'bold',
-    fontFamily: 'Arial',
-    color: '#e76f51',
+    marginRight: 10,
   },
-  addToCartContainer: {
-    backgroundColor: '#e76f51',
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 40,
+  descriptionContainer: {
+    maxHeight: 80,
+    overflow: 'hidden',
   },
-  addToCartText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    fontFamily: 'Arial',
+  description: {
+    fontSize: 14,
+    color: '#444',
   },
 });
 

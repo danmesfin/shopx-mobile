@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Rating from '../../components/Rating';
 
 const ProductDetailScreen = ({route}) => {
   const {productId} = route.params;
@@ -56,6 +57,7 @@ const ProductDetailScreen = ({route}) => {
     <ScrollView contentContainerStyle={styles.container}>
       <Image source={{uri: product.image}} style={styles.image} />
       <Text style={styles.title}>{product.title}</Text>
+      <Rating rating={product.rating.rate} count={product.rating.count} />
       <Text style={styles.description}>{product.description}</Text>
       <View style={styles.quantityContainer}>
         <TouchableOpacity onPress={decrementQuantity}>
@@ -63,23 +65,18 @@ const ProductDetailScreen = ({route}) => {
         </TouchableOpacity>
         <Text style={styles.quantity}>{quantity}</Text>
         <TouchableOpacity onPress={incrementQuantity}>
-          <FontAwesome
-            name={'plus'}
-            size={24}
-            color="#000"
-            type="FontAwesome"
-          />
+          <FontAwesome name="plus" size={24} color="#000" />
         </TouchableOpacity>
       </View>
       <Text style={styles.price}>${product.price.toFixed(2)}</Text>
       <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.favoriteButton}>
+          <FontAwesome name="heart-o" size={24} color="#000" />
+        </TouchableOpacity>
         <TouchableOpacity
           style={styles.addToCartButton}
           onPress={handleAddToCart}>
           <Text style={styles.addToCartButtonText}>Add to Cart</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.favoriteButton}>
-          <FontAwesome name="heart-o" size={24} color="#000" />
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -95,20 +92,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6F6F6',
   },
   image: {
-    width: 200,
-    height: 200,
+    width: '100%',
+    height: 300,
     resizeMode: 'contain',
     marginBottom: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center',
   },
   description: {
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 18,
+    marginBottom: 20,
     textAlign: 'center',
     paddingHorizontal: 20,
   },
@@ -118,41 +115,37 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   quantity: {
-    fontSize: 20,
+    fontSize: 24,
     marginHorizontal: 10,
   },
   price: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
+    textAlign: 'center',
   },
   buttonContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  addToCartButton: {
-    backgroundColor: '#e76f51',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 5,
-    marginTop: 20,
-  },
-  addToCartButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    width: '100%',
+    paddingHorizontal: 20,
   },
   favoriteButton: {
-    backgroundColor: 'white',
+    backgroundColor: '#FED7D7',
+    borderRadius: 50,
     padding: 10,
-    borderRadius: 20,
-    elevation: 3,
-    marginTop: 20,
   },
-  favoriteFontAwesome: {
-    fontSize: 25,
-    color: '#FF6B6B',
+  addToCartButton: {
+    backgroundColor: '#60A5FA',
+    borderRadius: 50,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+  },
+  addToCartButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
