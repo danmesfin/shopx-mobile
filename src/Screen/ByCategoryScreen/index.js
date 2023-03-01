@@ -5,30 +5,25 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
-  ScrollView,
 } from 'react-native';
-import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 
 import ProductCard from '../../components/ProductCard';
-import Categories from '../../components/CategoriesNavigator';
 
-const HomeScreen = () => {
+const CategoryScreen = ({route}) => {
+  const {category} = route.params;
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const navigation = useNavigation();
 
-  const handlePress = id => {
-    navigation.navigate('ProductDetail', {productId: id});
-  };
-  const onCategoryPress = category => {
-    navigation.navigate('ByCategoryScreen', {category: category});
-  };
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://fakestoreapi.com/products');
+        const response = await axios.get(
+          `https://fakestoreapi.com/products/category/${category}`,
+        );
         setProducts(response.data);
         setLoading(false);
       } catch (error) {
@@ -36,18 +31,20 @@ const HomeScreen = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [category]);
+
+  const handlePress = id => {
+    navigation.navigate('ProductDetail', {productId: id});
+  };
 
   const renderProductCard = ({item}) => (
     <ProductCard product={item} onPress={() => handlePress(item.id)} />
   );
 
   return (
-    <ScrollView style={styles.container}>
-      <Categories onCategoryPress={onCategoryPress} />
-
+    <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>New Arrivals</Text>
+        <Text style={styles.title}>{category}</Text>
         {loading && <ActivityIndicator size="small" color="#fff" />}
       </View>
 
@@ -58,7 +55,7 @@ const HomeScreen = () => {
         numColumns={2}
         contentContainerStyle={styles.productList}
       />
-    </ScrollView>
+    </View>
   );
 };
 
@@ -89,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default CategoryScreen;

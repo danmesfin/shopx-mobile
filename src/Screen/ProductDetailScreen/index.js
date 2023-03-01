@@ -144,13 +144,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   favoriteButton: {
-    position: 'absolute',
-    top: 20,
-    right: 20,
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 20,
     elevation: 3,
+    marginTop: 20,
   },
   favoriteFontAwesome: {
     fontSize: 25,
