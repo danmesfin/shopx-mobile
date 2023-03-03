@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   priceRatingContainer: {
     flexDirection: 'column',
-    alignItems: 'center',
+
     marginBottom: 10,
   },
   price: {
