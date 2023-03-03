@@ -7,8 +7,8 @@ import {signInUser} from '../../../reducers/authSlice';
 const SignInScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const {isLoading, error} = useSelector(state => state.auth);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('Atuny0');
+  const [password, setPassword] = useState('9uQFF1Lh');
 
   const handleSignIn = async () => {
     try {

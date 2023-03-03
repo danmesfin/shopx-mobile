@@ -56,9 +56,14 @@ const ProductDetailScreen = ({route}) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image source={{uri: product.image}} style={styles.image} />
-      <Text style={styles.title}>{product.title}</Text>
-      <Text style={styles.price}>${product.price.toFixed(2)}</Text>
-      <Rating rating={product.rating.rate} count={product.rating.count} />
+      <View style={styles.headerContainer}>
+        <Text style={styles.title}>{product.title}</Text>
+        <Text style={styles.price}>${product.price.toFixed(2)}</Text>
+      </View>
+      <View style={styles.rating}>
+        <Rating rating={product.rating.rate} count={product.rating.count} />
+      </View>
+
       <Text style={styles.description}>{product.description}</Text>
       <View style={styles.quantityContainer}>
         <TouchableOpacity onPress={decrementQuantity}>
@@ -87,7 +92,6 @@ const ProductDetailScreen = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    alignItems: 'center',
     paddingVertical: 20,
     paddingHorizontal: 10,
     backgroundColor: '#F6F6F6',
@@ -98,22 +102,31 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginBottom: 20,
   },
+  headerContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+  },
   title: {
-    fontSize: 24,
+    width: '80%',
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
-    textAlign: 'center',
+    textAlign: 'left',
+  },
+  rating: {
+    paddingHorizontal: 20,
   },
   description: {
-    fontSize: 18,
+    fontSize: 15,
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: 'left',
     paddingHorizontal: 20,
   },
   quantityContainer: {
+    width: '50%',
     flexDirection: 'row',
-    alignItems: 'center',
     marginBottom: 20,
+    paddingHorizontal: 20,
   },
   quantity: {
     fontSize: 24,
@@ -121,7 +134,7 @@ const styles = StyleSheet.create({
   },
   price: {
     color: '#FF7F50',
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
@@ -139,8 +152,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   addToCartButton: {
+    width: '80%',
     backgroundColor: '#FF7F50',
     borderRadius: 50,
+    alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 20,
   },
