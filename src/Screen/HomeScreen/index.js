@@ -55,7 +55,7 @@ const HomeScreen = () => {
         data={products}
         keyExtractor={item => item.id.toString()}
         renderItem={renderProductCard}
-        numColumns={1}
+        numColumns={2}
         contentContainerStyle={styles.productList}
       />
     </ScrollView>
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   productList: {
     justifyContent: 'space-between',
-    padding: 20,
+    padding: 10,
   },
 });
 

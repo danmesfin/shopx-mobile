@@ -40,9 +40,9 @@ const ProductCard = ({product, onPress}) => {
           <Text style={styles.price}>${product.price.toFixed(2)}</Text>
           <Rating rating={product.rating.rate} count={product.rating.count} />
         </View>
-        <View style={styles.descriptionContainer}>
+        {/* <View style={styles.descriptionContainer}>
           <Text style={styles.description}>{product.description}</Text>
-        </View>
+        </View> */}
       </View>
     </TouchableOpacity>
   );
@@ -50,6 +50,8 @@ const ProductCard = ({product, onPress}) => {
 
 const styles = StyleSheet.create({
   cardContainer: {
+    width: '49%',
+    margin: '1%',
     backgroundColor: '#FFF',
     borderRadius: 10,
     overflow: 'hidden',
@@ -60,7 +62,7 @@ const styles = StyleSheet.create({
     height: 250,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    padding: 10,
+    padding: 5,
   },
   favoriteContainer: {
     backgroundColor: '#FFF',
@@ -76,16 +78,19 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   title: {
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: 'bold',
     marginBottom: 10,
+    maxHeight: 50,
+    overflow: 'hidden',
   },
   priceRatingContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     marginBottom: 10,
   },
   price: {
+    color: '#FF7F50',
     fontSize: 16,
     fontWeight: 'bold',
     marginRight: 10,

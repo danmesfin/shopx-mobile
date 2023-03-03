@@ -57,6 +57,7 @@ const ProductDetailScreen = ({route}) => {
     <ScrollView contentContainerStyle={styles.container}>
       <Image source={{uri: product.image}} style={styles.image} />
       <Text style={styles.title}>{product.title}</Text>
+      <Text style={styles.price}>${product.price.toFixed(2)}</Text>
       <Rating rating={product.rating.rate} count={product.rating.count} />
       <Text style={styles.description}>{product.description}</Text>
       <View style={styles.quantityContainer}>
@@ -68,7 +69,7 @@ const ProductDetailScreen = ({route}) => {
           <FontAwesome name="plus" size={24} color="#000" />
         </TouchableOpacity>
       </View>
-      <Text style={styles.price}>${product.price.toFixed(2)}</Text>
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.favoriteButton}>
           <FontAwesome name="heart-o" size={24} color="#000" />
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   price: {
+    color: '#FF7F50',
     fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 20,
@@ -137,7 +139,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   addToCartButton: {
-    backgroundColor: '#60A5FA',
+    backgroundColor: '#FF7F50',
     borderRadius: 50,
     paddingVertical: 12,
     paddingHorizontal: 20,
