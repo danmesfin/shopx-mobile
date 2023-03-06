@@ -10,9 +10,11 @@ import {
 import axios from 'axios';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Rating from '../../components/Rating';
-
+import {useDispatch} from 'react-redux';
+import {addItemToCart} from '../../reducers/cartSlice';
 const ProductDetailScreen = ({route}) => {
   const {productId} = route.params;
+  const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
@@ -42,6 +44,7 @@ const ProductDetailScreen = ({route}) => {
 
   const handleAddToCart = () => {
     // Add logic to add product to cart
+    dispatch(addItemToCart(product));
     console.log(`Added ${quantity} ${product.title} to cart`);
   };
 

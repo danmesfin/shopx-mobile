@@ -1,51 +1,67 @@
 import React from 'react';
-import {StyleSheet, View, Text, FlatList, Image} from 'react-native';
-
-const CART_ITEMS = [
-  {
-    id: '1',
-    name: 'Product 1',
-    image: 'https://dummyimage.com/50x50/000/fff',
-    price: 9.99,
-    quantity: 2,
-  },
-  {
-    id: '2',
-    name: 'Product 2',
-    image: 'https://dummyimage.com/50x50/000/fff',
-    price: 12.99,
-    quantity: 1,
-  },
-  {
-    id: '3',
-    name: 'Product 3',
-    image: 'https://dummyimage.com/50x50/000/fff',
-    price: 7.99,
-    quantity: 3,
-  },
-];
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {removeItemFromCart} from '../../reducers/cartSlice';
 
 const CartScreen = () => {
-  const renderItem = ({item}) => (
-    <View style={styles.item}>
-      <Image source={{uri: item.image}} style={styles.itemImage} />
-      <View style={styles.itemDetails}>
-        <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.itemPrice}>
-          {item.quantity} x ${item.price}
-        </Text>
+  const dispatch = useDispatch();
+  const {items, totalQuantity, totalPrice} = useSelector(state => state.cart);
+
+  const handleRemoveItem = id => {
+    dispatch(removeItemFromCart(id));
+  };
+
+  const renderCartItem = ({item}) => (
+    <View style={styles.cartItem}>
+      <View style={styles.imageContainer}>
+        <Image source={{uri: item.image}} style={styles.image} />
+      </View>
+      <View style={styles.details}>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.price}>${item.price.toFixed(2)}</Text>
+        <View style={styles.actions}>
+          <TouchableOpacity onPress={() => handleRemoveItem(item.id)}>
+            <Text style={styles.remove}>Remove</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View style={styles.quantity}>
+        <Text style={styles.quantityText}>{item.quantity}</Text>
       </View>
     </View>
   );
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={CART_ITEMS}
-        keyExtractor={item => item.id}
-        renderItem={renderItem}
-        contentContainerStyle={styles.listContent}
-      />
+      <Text style={styles.heading}>Cart</Text>
+      {totalQuantity === 0 ? (
+        <Text style={styles.empty}>Your cart is empty.</Text>
+      ) : (
+        <FlatList
+          data={items}
+          renderItem={renderCartItem}
+          keyExtractor={item => item.id.toString()}
+        />
+      )}
+      <View style={styles.summary}>
+        <Text style={styles.summaryText}>
+          Total ({totalQuantity} {totalQuantity === 1 ? 'item' : 'items'}): $
+          {totalPrice.toFixed(2)}
+        </Text>
+        <TouchableOpacity
+          title="Checkout"
+          onPress={() => {}}
+          disabled={totalQuantity === 0}>
+          <Text>Checkout</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -54,44 +70,66 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
+    alignItems: 'center',
   },
-  listContent: {
-    paddingVertical: 20,
+  heading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
-  item: {
+  empty: {
+    fontSize: 18,
+  },
+  cartItem: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 20,
-    paddingHorizontal: 10,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-    elevation: 4,
   },
-  itemImage: {
-    width: 50,
-    height: 50,
+  imageContainer: {
     marginRight: 10,
   },
-  itemDetails: {
-    flex: 1,
-    justifyContent: 'space-between',
+  image: {
+    width: 50,
     height: 50,
-    paddingVertical: 5,
+    resizeMode: 'contain',
   },
-  itemName: {
+  details: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  price: {
     fontSize: 16,
+    color: 'gray',
+    marginBottom: 5,
+  },
+  actions: {
+    flexDirection: 'row',
+  },
+  remove: {
+    color: 'red',
+    fontWeight: 'bold',
+    marginRight: 10,
+  },
+  quantity: {
+    width: 50,
+    alignItems: 'center',
+  },
+  quantityText: {
+    fontSize: 18,
     fontWeight: 'bold',
   },
-  itemPrice: {
-    fontSize: 14,
-    color: '#999',
+  summary: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  summaryText: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
