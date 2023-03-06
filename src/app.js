@@ -25,7 +25,7 @@ const App = () => {
             tabBarIcon: ({color, size}) => {
               let iconName;
 
-              if (route.name === 'Home') {
+              if (route.name === 'Shope') {
                 iconName = 'home';
               } else if (route.name === 'Cart') {
                 iconName = 'shopping-cart';
@@ -41,7 +41,7 @@ const App = () => {
             inactiveTintColor: '#264653',
           }}>
           <Tab.Screen
-            name="Home"
+            name="Shope"
             component={HomeStackNavigator}
             options={{headerShown: false}}
           />
