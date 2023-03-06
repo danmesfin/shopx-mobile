@@ -41,7 +41,6 @@ const CartScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Shopping Cart</Text>
       {totalQuantity === 0 ? (
         <Text style={styles.empty}>Your cart is empty.</Text>
       ) : (
@@ -83,6 +82,7 @@ const CartScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 10,
     paddingHorizontal: 20,
   },
   heading: {

@@ -44,8 +44,10 @@ const ProductDetailScreen = ({route}) => {
 
   const handleAddToCart = () => {
     // Add logic to add product to cart
-    dispatch(addItemToCart(product));
-    console.log(`Added ${quantity} ${product.title} to cart`);
+    const itemQuantity = {quantity: quantity};
+    const itemWithQuantity = {...product, ...itemQuantity};
+    dispatch(addItemToCart(itemWithQuantity));
+    console.log(`Added ${itemWithQuantity.quantity} ${product.title} to cart`);
   };
 
   if (!product) {

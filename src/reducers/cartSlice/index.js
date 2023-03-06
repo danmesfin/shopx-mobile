@@ -18,16 +18,16 @@ const cartSlice = createSlice({
           title: newItem.title,
           price: newItem.price,
           image: newItem.image,
-          quantity: 1,
-          totalPrice: newItem.price,
+          quantity: newItem.quantity,
+          totalPrice: newItem.price * newItem.quantity,
         });
       } else {
-        existingItem.quantity++;
-        existingItem.totalPrice += newItem.price;
+        existingItem.quantity += newItem.quantity;
+        existingItem.totalPrice += newItem.price * newItem.quantity;
       }
 
-      state.totalQuantity++;
-      state.totalPrice += newItem.price;
+      state.totalQuantity += newItem.quantity;
+      state.totalPrice += newItem.price * newItem.quantity;
     },
 
     removeItemFromCart(state, action) {

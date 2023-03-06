@@ -46,7 +46,11 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Tab.Screen name="Cart" component={CartScreen} />
-          <Tab.Screen name="Profile" component={ProfileScreen} />
+          <Tab.Screen
+            name="Profile"
+            component={ProfileScreen}
+            options={{headerShown: false}}
+          />
         </Tab.Navigator>
       ) : (
         <Stack.Navigator>
